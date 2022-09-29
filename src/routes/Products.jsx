@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { EuiPage, EuiPanel, EuiBasicTable, EuiLink, EuiHealth } from '@elastic/eui';
-import { ProductTable } from '../components/Tables'
+import { EuiPage } from '@elastic/eui';
+import { ProductTable } from '../components/Tables';
 
 //Move to services
 const url = 'https://spaces.nexudus.com/api/token';
@@ -18,7 +18,6 @@ const options = {
         'password': 'WVw12Z59sxCv',
     })
 }
-
 
 const productsUrl = 'https://spaces.nexudus.com/api/billing/products';
 
@@ -53,57 +52,14 @@ export const Products = () => {
         fetch(productsUrl, productsOptions)
         .then(res => res.json())
         .then(json => {
-            console.log(json);
             return setProducts(json)
         })
         .catch(err => console.error('error:' + err));
     }, [token]);
 
-    //Table setup
-
-    const columns = [
-        {
-          field: 'BusinessName',
-          name: 'Name',
-        },
-        {
-          field: 'Tag',
-          name: 'Category',
-          header: false,
-        },
-        // {
-        //   field: 'firstName',
-        //   name: 'Full Name',
-        //   mobileOptions: {
-        //     only: true,
-        //     fullWidth: true,
-        //   },
-        //   render: (name, item) => (
-        //     <EuiFlexGroup responsive={false} alignItems="center">
-        //       <EuiFlexItem>
-        //         {item.firstName} {item.lastName}
-        //       </EuiFlexItem>
-        //       <EuiFlexItem grow={false}>{renderStatus(item.online)}</EuiFlexItem>
-        //     </EuiFlexGroup>
-        //   ),
-        // },
-      ];
-
-      console.log(products);
-
     return (
         <EuiPage>
-            <EuiPanel>
-                { 
-                    products?.Records ? (
-                        <EuiBasicTable 
-                            items={products?.Records}
-                            columns={columns}
-                    /> ) : (
-                        <div>Loading...</div>
-                    )
-                }
-            </EuiPanel>
+            <ProductTable products={products}/>
         </EuiPage>
     )
 };
