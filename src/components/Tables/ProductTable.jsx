@@ -1,9 +1,9 @@
 import { EuiPanel, EuiBasicTable, EuiBadge } from '@elastic/eui';
 import { FormattedNumber } from 'react-intl';
 import { truncate } from '../../utils';
+import { currencies } from '../../i18n';
 
 export const ProductTable = ({products}) => {
-    const currencies = { en_US: 'USD', en_GB: 'GBP', fr: 'EUR' };
     const locale = navigator.language;
     const currency = currencies[locale] || 'USD';
 

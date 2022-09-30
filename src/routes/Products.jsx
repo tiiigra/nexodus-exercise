@@ -2,45 +2,12 @@ import { useState, useEffect } from 'react';
 import { EuiPage } from '@elastic/eui';
 import { ProductTable } from '../components/Tables';
 
-//Move to services
-const url = 'https://spaces.nexudus.com/api/token';
-const options = {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-
-    },
-    body: new URLSearchParams({
-        'grant_type': 'password',
-        'userName': 'adrian+1004930927@nexudus.com',
-        'password': 'WVw12Z59sxCv',
-    })
-}
-
 const productsUrl = 'https://spaces.nexudus.com/api/billing/products';
 
-export const Products = () => {
+export const Products = ({token}) => {
     const [products, setProducts] = useState();
-    const [token, setToken] =  useState('');
 
-    // Check if there is a persistent token (in Local Storage?)
     useEffect(() => {
-        fetch(url, options)
-        .then(res => res.json())
-        .then(json => setToken(json?.access_token))
-        .catch(err => console.error('error:' + err));
-    }, []);
-
-    //Push to storage
-
-    //Get Products
-    useEffect(() => {
-        if (!token) {
-            return;
-        }
-        
         const productsOptions = {
             headers: {
                 'Content-type': 'application/json',
