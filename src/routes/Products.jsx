@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react';
 import { EuiPage } from '@elastic/eui';
 import { ProductTable } from '../components/Tables';
+import { BASE_URL } from '../resources';
 
-const productsUrl = 'https://spaces.nexudus.com/api/billing/products';
+const url = `${BASE_URL}/api/billing/products`;
 
 export const Products = ({token}) => {
     const [products, setProducts] = useState();
 
     useEffect(() => {
-        const productsOptions = {
+        const options = {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
             method: 'GET',
         };
-
-        fetch(productsUrl, productsOptions)
-        .then(res => res.json())
-        .then(json => {
-            return setProducts(json)
-        })
-        .catch(err => console.error('error:' + err));
-    }, [token]);
+        const fetchData = async () => {
+            const data = await fetch(url, options);
+            const json = await data.json();
+            setProducts(json)
+        }
+      
+        fetchData()
+          .catch(console.error);
+    }, [token])
 
     return (
         <EuiPage>
             <ProductTable products={products}/>
         </EuiPage>
-    )
+    )   
 };

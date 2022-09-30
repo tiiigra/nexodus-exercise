@@ -22,16 +22,18 @@ const options = {
 
 export const Home = () => {
     useEffect(() => {
-        if (localStorage.getItem(BEARER)) {
-            return;
+        const fetchData = async () => {
+            if (localStorage.getItem(BEARER)) {
+                return;
+            }
+            const data = await fetch(url, options);
+            const json = await data.json();
+            localStorage.setItem(BEARER, json?.access_token)
         }
-        fetch(url, options)
-        .then(res => res.json())
-        .then(json => {
-            return localStorage.setItem(BEARER, json?.access_token);
-        })
-        .catch(err => console.error('error:' + err));
-    });
+      
+        fetchData()
+          .catch(console.error);;
+    })
 
     return (  
         <div className="App">
