@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { EuiPage } from '@elastic/eui';
 import { ProductTable } from '../components/Tables';
-import { BASE_URL } from '../resources';
+import { BASE_URL, BEARER } from '../resources';
 
 const url = `${BASE_URL}/api/billing/products`;
 
-export const Products = ({token}) => {
+export const Products = () => {
     const [products, setProducts] = useState();
+    
+    const token = localStorage.getItem(BEARER);
 
     useEffect(() => {
         const options = {

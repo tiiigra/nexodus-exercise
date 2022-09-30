@@ -32,7 +32,7 @@ export const Home = () => {
         }
       
         fetchData()
-          .catch(console.error);;
+          .catch(console.error);
     })
 
     return (  
